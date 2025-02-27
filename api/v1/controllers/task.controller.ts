@@ -115,6 +115,22 @@ export const changeMulti = async (req: Request, res: Response) => {
                     message: "Cập Nhật Trạng Thái Thành Công!"
                 });
                 break;
+            case "delete":
+                await Task.updateMany(
+                    {
+                        _id: { $in: ids },
+                    },
+                    {
+                        deleted: true,
+                        deletedAt: new Date()
+                    }
+                );
+
+                res.json({
+                    code: 200,
+                    message: "Xóa Thành Công!"
+                });
+                break;
 
             default:
                 res.json({
