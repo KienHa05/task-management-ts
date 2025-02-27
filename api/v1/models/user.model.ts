@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
-// import { generateRandomString } from "../../../helpers/generate";
 
 const userSchema = new mongoose.Schema(
     {
-        title: String,
+        fullName: String,
         email: String,
         password: String,
         token: String,

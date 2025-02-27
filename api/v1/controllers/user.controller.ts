@@ -32,3 +32,39 @@ export const register = async (req: Request, res: Response) => {
         });
     }
 };
+
+// [POST] /api/v1/users/login
+export const login = async (req: Request, res: Response) => {
+    const email: string = req.body.email;
+    const password: string = req.body.password;
+
+    const user = await User.findOne({
+        email: email,
+        deleted: false,
+    });
+
+    if (!user) {
+        res.json({
+            code: 400,
+            message: "Email Không Tồn Tại!"
+        });
+        return;
+    }
+
+    if (md5(password) !== user.password) {
+        res.json({
+            code: 400,
+            message: "Sai Mật Khẩu!"
+        });
+        return;
+    }
+
+    const token = user.token;
+
+    res.json({
+        code: 200,
+        message: "Đăng Nhập Thành Công!",
+        token: token
+    });
+
+};
